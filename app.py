@@ -1,7 +1,6 @@
 import streamlit as st
 import tensorflow as tf
-from keras.models import load_model
-from keras.preprocessing import image
+from tensorflow.keras.preprocessing import image
 import cv2
 import numpy as np
 import os
@@ -20,10 +19,10 @@ dic = {
 
 img_size = 256
 
-# Absolute path to model
-MODEL_PATH = keras.models.load_model("model.keras")
+# Model path (STRING, not model)
+MODEL_PATH = "model.keras"
 
-# Stop if model is missing
+# Stop if model file is missing
 if not os.path.exists(MODEL_PATH):
     st.error("Model file not found.")
     st.stop()
@@ -31,7 +30,7 @@ if not os.path.exists(MODEL_PATH):
 # Cache model (VERY important for Streamlit)
 @st.cache_resource
 def load_dl_model():
-    return load_model(MODEL_PATH)
+    return tf.keras.models.load_model(MODEL_PATH)
 
 model = load_dl_model()
 
@@ -48,7 +47,9 @@ def predict_label(img_array):
 st.title("Diagnosis for the Prediction of Knee Osteoarthritis Using Deep Learning")
 st.write("Choose your Knee X-Ray file and click Predict to get your diagnosis.")
 
-uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader(
+    "Choose an image...", type=["jpg", "jpeg", "png"]
+)
 
 if uploaded_file:
     file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
@@ -58,10 +59,13 @@ if uploaded_file:
         st.error("Invalid image file.")
         st.stop()
 
-    st.image(img, channels="BGR", caption="Uploaded Image", use_container_width=True)
+    st.image(
+        img,
+        channels="BGR",
+        caption="Uploaded Image",
+        use_container_width=True
+    )
 
     if st.button("Predict"):
         prediction_text = predict_label(img)
         st.success(f"Prediction: **{prediction_text}**")
-
-
