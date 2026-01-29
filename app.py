@@ -16,8 +16,7 @@ dic = {0: 'Grade 0 : Normal', 1: 'Grade 1 : Doubtful', 2: 'Grade 2 : Mild', 3: '
 img_size = 256
 
 # Download the model if not already downloaded
-MODEL_URL = "https://huggingface.co/SPPramod/model2.keras/resolve/main/model2.keras"
-MODEL_PATH = "model.keras"
+MODEL_URL = "https://huggingface.co/SPPramod-26/osteo/resolve/main/model.keras"
 
 if not os.path.exists(MODEL_PATH):
     with st.spinner("Downloading model..."):
@@ -52,3 +51,4 @@ if uploaded_file is not None:
     if st.button("Predict"):
         prediction_text = predict_label(img)
         st.success(f"Prediction: **{prediction_text}**")
+
