@@ -17,6 +17,7 @@ img_size = 256
 
 # Download the model if not already downloaded
 MODEL_URL = "https://huggingface.co/SPPramod-26/osteo/resolve/main/model.keras"
+MODEL_PATH = "model.keras"
 
 if not os.path.exists(MODEL_PATH):
     with st.spinner("Downloading model..."):
@@ -51,4 +52,5 @@ if uploaded_file is not None:
     if st.button("Predict"):
         prediction_text = predict_label(img)
         st.success(f"Prediction: **{prediction_text}**")
+
 
