@@ -20,8 +20,7 @@ dic = {
 img_size = 256
 
 # Absolute path to model
-working_dir = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(working_dir, "trained_model", "model.keras")
+MODEL_PATH = keras.models.load_model("model.keras")
 
 # Stop if model is missing
 if not os.path.exists(MODEL_PATH):
@@ -63,3 +62,4 @@ if uploaded_file:
     if st.button("Predict"):
         prediction_text = predict_label(img)
         st.success(f"Prediction: **{prediction_text}**")
+
